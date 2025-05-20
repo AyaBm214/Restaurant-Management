@@ -1,0 +1,173 @@
+<section class="reservation-section">
+  <div class="container">
+    <div class="reservation-container">
+      <div class="reservation-info">
+        <h2>Réservez votre table</h2>
+        <p>Réservez votre table pour une expérience culinaire inoubliable. Nous vous accueillons tous les jours pour le déjeuner et le dîner.</p>
+        
+        <div class="restaurant-details">
+          <div class="detail-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h4>Heures d'ouverture</h4>
+              <p>Déjeuner: 11h30 - 14h30</p>
+              <p>Dîner: 19h00 - 23h00</p>
+            </div>
+          </div>
+          
+          <div class="detail-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h4>Adresse</h4>
+              <p>123 Avenue Gastronomique</p>
+              <p>75001 Paris, France</p>
+            </div>
+          </div>
+          
+          <div class="detail-item">
+            <i class="fas fa-phone-alt"></i>
+            <div>
+              <h4>Contact</h4>
+              <p>+33 1 23 45 67 89</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="reservation-image">
+          <img src="assets/background.jpg" alt="Intérieur du restaurant">
+          <div class="image-overlay"></div>
+        </div>
+      </div>
+      
+      <div class="reservation-form-container">
+        <div class="form-header">
+          <h3>Formulaire de réservation</h3>
+          <p>Complétez le formulaire ci-dessous pour réserver votre table</p>
+        </div>
+        
+        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="reservation-form">
+          <div class="form-group">
+            <label for="name">Nom complet</label>
+            <input 
+              type="text" 
+              id="name" 
+              formControlName="name" 
+              placeholder="Votre nom complet"
+              [ngClass]="{'invalid': formControls['name'].errors && formControls['name'].touched}"
+            >
+            <div class="error-message" *ngIf="formControls['name'].errors && formControls['name'].touched">
+              Veuillez entrer votre nom complet
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email" 
+                placeholder="Votre email"
+                [ngClass]="{'invalid': formControls['email'].errors && formControls['email'].touched}"
+              >
+              <div class="error-message" *ngIf="formControls['email'].errors && formControls['email'].touched">
+                Veuillez entrer un email valide
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Téléphone</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                formControlName="phone" 
+                placeholder="Votre numéro"
+                [ngClass]="{'invalid': formControls['phone'].errors && formControls['phone'].touched}"
+              >
+              <div class="error-message" *ngIf="formControls['phone'].errors && formControls['phone'].touched">
+                Veuillez entrer un numéro valide (10 chiffres)
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input 
+                type="date" 
+                id="date" 
+                formControlName="date" 
+                [ngClass]="{'invalid': formControls['date'].errors && formControls['date'].touched}"
+              >
+              <div class="error-message" *ngIf="formControls['date'].errors && formControls['date'].touched">
+                Veuillez sélectionner une date
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="time">Heure</label>
+              <select 
+                id="time" 
+                formControlName="time"
+                [ngClass]="{'invalid': formControls['time'].errors && formControls['time'].touched}"
+              >
+                <option value="" disabled selected>Sélectionnez une heure</option>
+                <option *ngFor="let time of timeSlots" [value]="time">{{time}}</option>
+              </select>
+              <div class="error-message" *ngIf="formControls['time'].errors && formControls['time'].touched">
+                Veuillez sélectionner une heure
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="guests">Personnes</label>
+              <select 
+                id="guests" 
+                formControlName="guests"
+                [ngClass]="{'invalid': formControls['guests'].errors && formControls['guests'].touched}"
+              >
+                <option *ngFor="let num of guestNumbers" [value]="num">{{num}} personne<span *ngIf="num > 1">s</span></option>
+              </select>
+              <div class="error-message" *ngIf="formControls['guests'].errors && formControls['guests'].touched">
+                Veuillez sélectionner le nombre de personnes
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="occasion">Occasion (optionnel)</label>
+            <select id="occasion" formControlName="occasion">
+              <option value="">Sélectionnez une occasion</option>
+              <option value="birthday">Anniversaire</option>
+              <option value="anniversary">Anniversaire de mariage</option>
+              <option value="business">Repas d'affaires</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="specialRequests">Demandes spéciales (optionnel)</label>
+            <textarea 
+              id="specialRequests" 
+              formControlName="specialRequests" 
+              placeholder="Allergies, préférences alimentaires, etc."
+              rows="3"
+            ></textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn" [disabled]="reservationForm.invalid">
+            <span *ngIf="!isSubmitted">Réserver maintenant</span>
+            <span *ngIf="isSubmitted" class="loading">
+              <i class="fas fa-spinner fa-spin"></i> Traitement en cours...
+            </span>
+          </button>
+          
+          <div class="success-message" *ngIf="isSubmitted && reservationForm.valid">
+            <i class="fas fa-check-circle"></i>
+            Votre réservation a été envoyée avec succès ! Nous vous contacterons bientôt pour confirmer.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

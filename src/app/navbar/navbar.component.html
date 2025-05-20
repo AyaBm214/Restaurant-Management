@@ -1,0 +1,42 @@
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar-content">
+      <div class="logo">
+        <img src="assets/logo-removebg-preview.png" alt="Taboulé">
+        <span>Taboulé</span>
+      </div>
+      
+      <div class="nav-links">
+        <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+        <a routerLink="/menu" routerLinkActive="active" class="nav-link">Menu</a>
+        <a routerLink="/reservations" routerLinkActive="active" class="nav-link">Reservations</a>
+       <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
+      </div>
+      
+      <div class="nav-actions">
+        <button class="search-btn">
+          <i class="fa fa-search"></i>
+        </button>
+        <button class="cart-btn">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="cart-count">2</span>
+        </button>
+        <button class="menu-toggle" (click)="toggleMobileMenu()">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" [class.active]="isMobileMenuOpen">
+      <div class="mobile-nav-links">
+        <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+        <a routerLink="/menu" routerLinkActive="active" class="nav-link">Menu</a>
+        <a routerLink="/reservations" routerLinkActive="active" class="nav-link">Reservations</a>
+        <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+

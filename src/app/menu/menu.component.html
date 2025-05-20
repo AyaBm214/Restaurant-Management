@@ -1,0 +1,50 @@
+<div class="menu-page">
+  <div class="menu-header">
+    <div class="container">
+      <h1>Our Menu</h1>
+      <p>Discover our Mediterranean specialties prepared with fresh, local ingredients</p>
+      
+      <div class="menu-categories">
+        <button 
+          *ngFor="let category of categories" 
+          [class.active]="activeCategory === category.id"
+          (click)="setActiveCategory(category.id)"
+          class="category-btn">
+          <i [class]="category.icon"></i>
+          {{ category.name }}
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="menu-content">
+    <div class="container">
+      <div class="menu-illustration">
+        <div class="menu-circle">
+          <i *ngIf="activeCategory === 'taboule'" class="fa-solid fa-wheat-awn fa-4x"></i>
+          <i *ngIf="activeCategory === 'salades'" class="fa-solid fa-leaf fa-4x"></i>
+          <i *ngIf="activeCategory === 'mezze'" class="fa-solid fa-plate-wheat fa-4x"></i>
+          <i *ngIf="activeCategory === 'plats'" class="fa-solid fa-utensils fa-4x"></i>
+          
+          <div class="menu-title">
+            <h2 *ngFor="let category of categories" [class.visible]="activeCategory === category.id">
+              {{ category.name }}
+            </h2>
+          </div>
+        </div>
+      </div>
+      
+      <div class="menu-items">
+        <div class="menu-column">
+          <div class="menu-item" *ngFor="let item of menuItems[activeCategory]; let i = index" [class.right-column]="i >= menuItems[activeCategory].length / 2">
+            <div class="item-header">
+              <h3>{{ item.name }}</h3>
+              <span class="price">{{ item.price | currency:'EUR' }}</span>
+            </div>
+            <p class="description">{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
